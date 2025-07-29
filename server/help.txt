@@ -67,3 +67,9 @@ docker exec -it psgr psql -U postgres
 
 
 git reset HEAD~
+
+
+
+
+drf
+author = serializers.ReadOnlyField(source='author.username') # Получаем имя пользователя, а не объект

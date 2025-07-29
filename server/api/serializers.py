@@ -1,41 +1,65 @@
 from rest_framework import serializers
-from api.models import Basket, Brand, Device, DeviceInfo
+from api.models import Basket, BasketDevice, Brand, Device, DeviceInfo, Type, User
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
+
+
+class DeviceSerializer(serializers.ModelSerializer):
+
+    deviceinfos = serializers.StringRelatedField(many=True)
+
     class Meta:
         model = Device
-        fields = ['name', 'price', 'esteem']
+        fields = ['id', 'name', 'price', 'esteem', 'img', 'type', 'brand', 'deviceinfos']
 
 
-class DeviceSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Device
-        fields = ['name', 'price', 'esteem']
+class DeviceInfoSerializer(serializers.ModelSerializer):
 
+    # deviceы = DeviceSerializer()
 
-class DeviceInfoSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = DeviceInfo
-        fields = ['title', 'description', 'device']
+        fields = '__all__'
+
+    # def create(self, validated_data):
+    #     device_data = validated_data.pop('device')
+    #     device = Device.objects.create(**device_data)
+    #     device_info = DeviceInfo.objects.create(device=device, **validated_data)
+    #     return device_info
 
 
-class BasketSerializer(serializers.HyperlinkedModelSerializer):
+class BasketSerializer(serializers.ModelSerializer):
+
+    basketdevices = serializers.StringRelatedField(many=True)
+
     class Meta:
         model = Basket
-        fields = ['user', 'device']
+        fields = ['user', 'basketdevices']
+
+
+class BasketDeviceSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = BasketDevice
+        fields = '__all__'
 
 
 class TypeSerializer(serializers.HyperlinkedModelSerializer):
+
     class Meta:
-        model = Device
-        fields = ['name', 'device']
+        model = Type
+        fields = ['name',]
 
 
 class BrandSerializer(serializers.HyperlinkedModelSerializer):
+
     class Meta:
         model = Brand
-        fields = ['name', 'device']
+        fields = ['name',]
 
 
 class RatingSerializer(serializers.HyperlinkedModelSerializer):

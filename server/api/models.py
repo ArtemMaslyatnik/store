@@ -8,36 +8,41 @@ class User(models.Model):
     role = models.CharField(max_length=32, blank=False, default='USER')
 
 
+class Type(models.Model):
+    id = models.AutoField
+    name = models.CharField(max_length=64, blank=False, default='')
+
+
+class Brand(models.Model):
+    id = models.AutoField
+    name = models.CharField(max_length=128, blank=False, default='')
+
+
 class Device(models.Model):
     id = models.AutoField
     name = models.CharField(max_length=128, blank=False, default='')
     price = models.BigIntegerField()
     esteem = models.SmallIntegerField()
     img = models.CharField(max_length=128, blank=False, default='')
+    type = models.ForeignKey(Type, on_delete=models.CASCADE)
+    brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
 
 
 class DeviceInfo(models.Model):
     id = models.AutoField
     title = models.CharField(max_length=128, blank=False, default='')
     description = models.CharField(max_length=1000, blank=False, default='')
-    device = models.ForeignKey(Device, on_delete=models.CASCADE)
+    device = models.ForeignKey(Device, related_name='deviceinfos', on_delete=models.CASCADE)
 
 
 class Basket(models.Model):
     id = models.AutoField
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    device = models.ForeignKey(Device, on_delete=models.CASCADE)
 
 
-class Type(models.Model):
+class BasketDevice(models.Model):
     id = models.AutoField
-    name = models.CharField(max_length=64, blank=False, default='')
-    device = models.ForeignKey(Device, on_delete=models.CASCADE)
-
-
-class Brand(models.Model):
-    id = models.AutoField
-    name = models.CharField(max_length=128, blank=False, default='')
+    basket = models.ForeignKey(Basket, related_name='basketdevices', on_delete=models.CASCADE)
     device = models.ForeignKey(Device, on_delete=models.CASCADE)
 
 

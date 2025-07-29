@@ -10,6 +10,18 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
 
+class TypeViewSet(viewsets.ModelViewSet):
+
+    queryset = Type.objects.all()
+    serializer_class = TypeSerializer
+
+
+class BrandViewSet(viewsets.ModelViewSet):
+
+    queryset = Brand.objects.all()
+    serializer_class = BrandSerializer
+
+
 class DeviceViewSet(viewsets.ModelViewSet):
 
     queryset = Device.objects.all()
@@ -26,18 +38,6 @@ class BasketViewSet(viewsets.ModelViewSet):
 
     queryset = Basket.objects.all()
     serializer_class = BasketSerializer
-
-
-class TypeViewSet(viewsets.ModelViewSet):
-
-    queryset = Type.objects.all()
-    serializer_class = TypeSerializer
-
-
-class BrandInfoViewSet(viewsets.ModelViewSet):
-
-    queryset = Brand.objects.all()
-    serializer_class = BrandSerializer
 
 
 class RatingViewSet(viewsets.ModelViewSet):
