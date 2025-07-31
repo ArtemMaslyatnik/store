@@ -7,8 +7,6 @@ app_name = 'api'
 # Create a router and register our viewsets with it.
 router = DefaultRouter()
 
-router.register(r'user', views.UserViewSet,
-                basename='User')
 router.register(r'device', views.DeviceViewSet,
                 basename='Device')
 router.register(r'dviceinfo', views.DeviceInfoViewSet,

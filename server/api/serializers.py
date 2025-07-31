@@ -1,11 +1,5 @@
 from rest_framework import serializers
-from api.models import Basket, BasketDevice, Brand, Device, DeviceInfo, Type, User
-
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = '__all__'
+from api.models import Basket, BasketDevice, Brand, Device, DeviceInfo, Type
 
 
 class DeviceSerializer(serializers.ModelSerializer):
@@ -48,27 +42,27 @@ class BasketDeviceSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class TypeSerializer(serializers.HyperlinkedModelSerializer):
+class TypeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Type
         fields = ['name',]
 
 
-class BrandSerializer(serializers.HyperlinkedModelSerializer):
+class BrandSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Brand
         fields = ['name',]
 
 
-class RatingSerializer(serializers.HyperlinkedModelSerializer):
+class RatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Brand
         fields = ['rate', 'user', 'device']
 
 
-class TypeBrendSerializer(serializers.HyperlinkedModelSerializer):
+class TypeBrendSerializer(serializers.ModelSerializer):
     class Meta:
         model = Device
         fields = ['name', 'device']
