@@ -1,4 +1,6 @@
+server/.vscode
 server/venv
 server/config/__pycache__
 server/api/__init__.py
 server/api/migrations/__init__.py
+front/node_modules
