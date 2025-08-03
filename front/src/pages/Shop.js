@@ -1,21 +1,29 @@
+import React, {useContext, useEffect} from 'react';
+import {observer} from "mobx-react-lite";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import {Context} from "../index";
+import TypeBar from "../components/TypeBar";
+import BrandBar from "../components/BrandBar";
+import DeviceList from "../components/DeviceList";
 
-const Shop = () => {
-  return (
-    <Container>
-      <Row>
-        <Col>1 of 2</Col>
-        <Col>2 of 2</Col>
-      </Row>
-      <Row>
-        <Col>1 of 3</Col>
-        <Col>2 of 3</Col>
-        <Col>3 of 3</Col>
-      </Row>
-    </Container>
-  );
-}
+
+const Shop = observer(() => {
+    const {device} = useContext(Context)
+    return (
+        <Container>
+            <Row className="mt-2">
+                <Col md={3}>
+                  <TypeBar/>
+                </Col>
+                <Col md={9}>
+                  <BrandBar/>
+                  <DeviceList/>
+                </Col>
+            </Row>
+        </Container>
+    );
+});
 
 export default Shop;
