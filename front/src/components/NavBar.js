@@ -4,8 +4,9 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import {Context} from '../index'
 import {REGISTRATION_ROUTE, SHOP_ROUTE, LOGIN_ROUTE} from "../utils/consts";
+import {observer} from "mobx-react-lite";
 
-const NavBar = () => {
+const NavBar = observer(() => {
   const {user} = useContext(Context) 
   return (
        <Navbar bg="light" data-bs-theme="light">
@@ -25,6 +26,6 @@ const NavBar = () => {
         </Container>
       </Navbar>
   );
-}
+});
 
 export default NavBar;

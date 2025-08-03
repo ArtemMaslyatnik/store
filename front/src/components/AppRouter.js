@@ -10,11 +10,11 @@ const AppRouter = () => {
     console.log(user)
      return (
         <Routes>
-            {user.isAuth && authRoutes.map(({path, Component}) =>
-                <Route key={path} path={path} component={Component} exact/>
+            {user.isAuth && authRoutes.map(({path, Element}) =>
+                <Route key={path} path={path} element={Element} exact/>
             )}
-            {publicRoutes.map(({path, Component}) =>
-                <Route key={path} path={path} component={Component} exact/>
+            {publicRoutes.map(({path, Element}) =>
+                <Route key={path} path={path} element={Element} exact/>
             )}
             <Route path="/" element={<Navigate to={SHOP_ROUTE} replace />} />
         </Routes>
