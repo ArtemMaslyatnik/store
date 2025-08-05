@@ -9,8 +9,6 @@ router = DefaultRouter()
 
 router.register(r'device', views.DeviceViewSet,
                 basename='Device')
-router.register(r'dviceinfo', views.DeviceInfoViewSet,
-                basename='DeviceInfo')
 router.register(r'basket', views.BasketViewSet,
                 basename='Basket')
 router.register(r'type', views.TypeViewSet,

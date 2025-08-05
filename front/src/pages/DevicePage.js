@@ -2,14 +2,16 @@ import React, {useEffect, useState} from 'react';
 import {Button, Card, Col, Container, Image, Row} from "react-bootstrap";
 import {useParams} from 'react-router-dom'
 import bigStar from '../assets/bigStar.png'
+import {fetchOneDevice} from "../http/deviceAPI";
 
 const DevicePage = () => {
 
-    const device = {id: '1', name:'телефон самсунг', price: 2500, rating: 5, img: '#', type: 1, brand: 1};
-    const deviceinfo = [
-        {id: '1', title:'телdsfasdнг', description: 'телефон самсунг крутой'},
-        {id: '2', title:'тsdafdsf', description: 'телефон самсунг крутой'},
-    ]
+    const [device, setDevice] = useState({info: []})
+    console.log(device)
+    const {id} = useParams()
+    useEffect(() => {
+        fetchOneDevice(id).then(data => setDevice(data))
+    }, [])
 
     return (
         <Container className="mt-3">
@@ -24,7 +26,7 @@ const DevicePage = () => {
                             className="d-flex align-items-center justify-content-center"
                             style={{background: `url(${bigStar}) no-repeat center center`, width:240, height: 240, backgroundSize: 'cover', fontSize:64}}
                         >
-                            {device.rating}
+                            {device.esteem}
                         </div>
                     </Row>
                 </Col>
@@ -40,7 +42,7 @@ const DevicePage = () => {
             </Row>
             <Row className="d-flex flex-column m-3">
                 <h1>Характеристики</h1>
-                {deviceinfo.map((info, index) =>
+                {device.info.map((info, index) =>
                     <Row key={info.id} style={{background: index % 2 === 0 ? 'lightgray' : 'transparent', padding: 10}}>
                         {info.title}: {info.description}
                     </Row>

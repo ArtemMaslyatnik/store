@@ -2,28 +2,28 @@ from rest_framework import serializers
 from api.models import Basket, BasketDevice, Brand, Device, DeviceInfo, Type
 
 
-class DeviceSerializer(serializers.ModelSerializer):
-
-    deviceinfos = serializers.StringRelatedField(many=True)
-
-    class Meta:
-        model = Device
-        fields = ['id', 'name', 'price', 'esteem', 'img', 'type', 'brand', 'deviceinfos']
-
-
 class DeviceInfoSerializer(serializers.ModelSerializer):
 
     # deviceы = DeviceSerializer()
 
     class Meta:
         model = DeviceInfo
-        fields = '__all__'
+        fields = ['id', 'title', 'description']
 
     # def create(self, validated_data):
     #     device_data = validated_data.pop('device')
     #     device = Device.objects.create(**device_data)
     #     device_info = DeviceInfo.objects.create(device=device, **validated_data)
     #     return device_info
+
+
+class DeviceSerializer(serializers.ModelSerializer):
+
+    deviceinfos =  DeviceInfoSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Device
+        fields = ['id', 'name', 'price', 'esteem', 'img', 'type', 'brand', 'deviceinfos']
 
 
 class BasketSerializer(serializers.ModelSerializer):
@@ -46,14 +46,14 @@ class TypeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Type
-        fields = ['name',]
+        fields = '__all__'
 
 
 class BrandSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Brand
-        fields = ['name',]
+        fields = '__all__'
 
 
 class RatingSerializer(serializers.ModelSerializer):

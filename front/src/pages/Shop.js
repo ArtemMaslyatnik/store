@@ -7,10 +7,22 @@ import {Context} from "../index";
 import TypeBar from "../components/TypeBar";
 import BrandBar from "../components/BrandBar";
 import DeviceList from "../components/DeviceList";
+import {fetchBrands, fetchTypes, fetchDevices} from "../http/deviceAPI";
+
 
 
 const Shop = observer(() => {
     const {device} = useContext(Context)
+ 
+    useEffect(() => {
+        fetchTypes().then(data => device.setTypes(data.results))
+        fetchBrands().then(data => device.setBrands(data.results))
+        fetchDevices(null, null, 1, 2).then(data => {
+                    device.setDevices(data.results)
+                    device.setTotalCount(data.count)
+                })
+    })
+
     return (
         <Container>
             <Row className="mt-2">
