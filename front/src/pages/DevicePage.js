@@ -6,8 +6,7 @@ import {fetchOneDevice} from "../http/deviceAPI";
 
 const DevicePage = () => {
 
-    const [device, setDevice] = useState({info: []})
-    console.log(device)
+    const [device, setDevice] = useState({deviceinfos: []})
     const {id} = useParams()
     useEffect(() => {
         fetchOneDevice(id).then(data => setDevice(data))
@@ -42,7 +41,7 @@ const DevicePage = () => {
             </Row>
             <Row className="d-flex flex-column m-3">
                 <h1>Характеристики</h1>
-                {device.info.map((info, index) =>
+                {device.deviceinfos.map((info, index) =>
                     <Row key={info.id} style={{background: index % 2 === 0 ? 'lightgray' : 'transparent', padding: 10}}>
                         {info.title}: {info.description}
                     </Row>
