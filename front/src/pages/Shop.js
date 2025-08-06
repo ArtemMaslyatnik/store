@@ -8,7 +8,7 @@ import TypeBar from "../components/TypeBar";
 import BrandBar from "../components/BrandBar";
 import DeviceList from "../components/DeviceList";
 import {fetchBrands, fetchTypes, fetchDevices} from "../http/deviceAPI";
-
+import Pages from "../components/Pages";
 
 
 const Shop = observer(() => {
@@ -32,6 +32,7 @@ const Shop = observer(() => {
                 <Col md={9}>
                   <BrandBar/>
                   <DeviceList/>
+                  <Pages/>
                 </Col>
             </Row>
         </Container>
