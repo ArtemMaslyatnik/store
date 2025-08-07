@@ -1,9 +1,9 @@
 from rest_framework import viewsets
-
+from rest_framework.pagination import LimitOffsetPagination
 from api.models import Basket, Brand, Device, DeviceInfo, Rating, Type, TypeBrend
 from api.permission import IsAdminOrReadOnly, IsOwner
 from api.serializers import BasketSerializer, BrandSerializer, DeviceInfoSerializer, DeviceSerializer, RatingSerializer, TypeBrendSerializer, TypeSerializer
-
+from django_filters.rest_framework import DjangoFilterBackend
 
 class TypeViewSet(viewsets.ModelViewSet):
 
@@ -25,6 +25,11 @@ class DeviceViewSet(viewsets.ModelViewSet):
 
     queryset = Device.objects.all()
     serializer_class = DeviceSerializer
+    
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['type', 'brand']
+    
+    pagination_class = LimitOffsetPagination
 
     permission_classes = (IsAdminOrReadOnly, )
 
@@ -43,7 +48,6 @@ class BasketViewSet(viewsets.ModelViewSet):
     serializer_class = BasketSerializer
 
     permission_classes = (IsOwner, )
-
 
 
 class RatingViewSet(viewsets.ModelViewSet):

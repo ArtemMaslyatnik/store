@@ -13,6 +13,8 @@ const DeviceItem = ({device}) => {
                 <Image width={150} height={150} src="#"/>
                 <div className="text-black-50 mt-1 d-flex justify-content-between align-items-center">
                     <div>Samsung...</div>
+                    <div>Тип{device.type}</div>
+                    <div>Бренд{device.brand}</div>
                     <div className="d-flex align-items-center">
                         <div>{device.rating}</div>
                         <Image width={18} height={18} src={star}/>
