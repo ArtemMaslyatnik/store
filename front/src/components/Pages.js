@@ -7,12 +7,11 @@ const Pages = observer(() => {
     const {device} = useContext(Context)
     const pageCount = Math.ceil(device.totalCount / device.limit)
     const pages = []
-    console.log(device.totalCount)
-    console.log(device.limit)
+
     for (let i = 0; i < pageCount; i++) {
         pages.push(i + 1)
     }
-console.log(pages)
+
     return (
         <Pagination className="mt-3">
             {pages.map(page =>
