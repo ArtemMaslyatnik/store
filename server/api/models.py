@@ -1,5 +1,5 @@
-from django.contrib.auth.models import User
 from django.db import models
+from django.contrib.auth import get_user_model
 
 
 class Type(models.Model):
@@ -31,7 +31,7 @@ class DeviceInfo(models.Model):
 
 class Basket(models.Model):
     id = models.AutoField
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    user = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True, blank=True)
 
 
 class BasketDevice(models.Model):
@@ -43,7 +43,7 @@ class BasketDevice(models.Model):
 class Rating(models.Model):
     id = models.AutoField
     rate = models.SmallIntegerField()
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    user = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True, blank=True)
     device = models.ForeignKey(Device, on_delete=models.CASCADE)
 
 
