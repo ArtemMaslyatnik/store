@@ -1,6 +1,7 @@
 import {makeAutoObservable} from "mobx";
-import {login , registration} from "../http/userAPI"
+import {login , registration, logout} from "../http/userAPI"
 import axios from "axios";
+import {REACT_APP_API_URL} from "../http/index";
 
 export default class UserStore {
     user = []
@@ -23,14 +24,13 @@ export default class UserStore {
         this.isLoading = bool;
     }
 
-    async login(email, username, password, ) {
+    async login(email, password, ) {
         try {
-            const data = await login(email, username, password);
+            const data = await login(email, password);
+            localStorage.setItem('token', data.access_token);
             console.log(data)
-            localStorage.setItem('token', data.access);
             this.setAuth(true);
             this.setUser(data);
-            console.log(data)
         } catch (e) {
             console.log(e.data?.message);
         }
@@ -46,27 +46,23 @@ export default class UserStore {
         }
     }
 
-    // async logout() {
-    //     try {
-    //         const response = await AuthService.logout();
-    //         localStorage.removeItem('token');
-    //         this.setAuth(false);
-    //         this.setUser();
-    //     } catch (e) {
-    //         console.log(e.response?.data?.message);
-    //     }
-    // }
+    async logout() {
+        try {
+            const response = await logout();
+            localStorage.removeItem('token');
+            this.setAuth(false);
+            this.setUser();
+        } catch (e) {
+            console.log(e.response?.data?.message);
+        }
+    }
 
-    async checkAuth(email, username, password,) {
+    async checkAuth(email, password) {
         this.setLoading(true);
         try {
-            const data = await axios.post(`'http://localhost:8000/auth/jwt/refresh/`, 
-                {
-                    email, 
-                    username, 
-                    password,
-                })
-            console.log(data);
+            const data = await axios.post(`${REACT_APP_API_URL}api/auth/refresh-token/`, 
+                {email, password},
+                {withCredentials: true})
             localStorage.setItem('token', data.accessToken);
             this.setAuth(true);
             this.setUser(data.user);

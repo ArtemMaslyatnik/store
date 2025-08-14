@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import Button from 'react-bootstrap/Button';
 import {Context} from '../index'
 import {REGISTRATION_ROUTE, SHOP_ROUTE, LOGIN_ROUTE} from "../utils/consts";
 import {observer} from "mobx-react-lite";
@@ -15,7 +16,12 @@ const NavBar = observer(() => {
             {user.isAuth ?
               <Nav className="me-auto">
                 <Nav.Link href={SHOP_ROUTE}>{user.isAuth}</Nav.Link>
-                <Nav.Link href={SHOP_ROUTE}>Выйти</Nav.Link>
+                <Button 
+                variant="light"
+                onClick={() => user.logout()}
+                >
+                  Выйти
+                </Button>
               </Nav> 
               :
               <Nav className="me-auto">

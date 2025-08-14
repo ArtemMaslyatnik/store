@@ -11,7 +11,7 @@ import {Context} from "../index";
 const Auth = observer(() => {
   const {user} = useContext(Context)
   const location = useLocation()
-  const history = useNavigate ()
+  const navigate = useNavigate ()
   const isLogin = location.pathname === LOGIN_ROUTE
   const [email, setEmail] = useState('')
   const [username, setUsername] = useState('')
@@ -21,11 +21,11 @@ const Auth = observer(() => {
   const click = async () => {
       try {
           if (isLogin) {
-              user.login(email, username, password);
+              user.login(email, password);
           } else {
               user.registration(email, username, password);
           }
-          // history.push(SHOP_ROUTE)
+          navigate(SHOP_ROUTE)
       } catch (e) {
           console.log(e)
       }
@@ -50,15 +50,17 @@ const Auth = observer(() => {
             <Form.Text className="text-muted">
             </Form.Text>
           </Form.Group>
-           <Form.Group className="d-flex flex-column">
-            <Form.Label>Имя пользователя</Form.Label>
-            <Form.Control 
-              value={username}
-              onChange={e => setUsername(e.target.value)} 
-            />
-            <Form.Text className="text-muted">
-            </Form.Text>
-          </Form.Group>
+          {isLogin ? '' : 
+            <Form.Group className="d-flex flex-column">
+              <Form.Label>Имя пользователя</Form.Label>
+              <Form.Control 
+                value={username}
+                onChange={e => setUsername(e.target.value)} 
+              />
+              <Form.Text className="text-muted">
+              </Form.Text>
+            </Form.Group>
+          }
           <Form.Group className="mb-3">
             <Form.Label>Пароль</Form.Label>
             <Form.Control 

@@ -10,18 +10,10 @@ import {Spinner} from "react-bootstrap";
 const App = observer(() =>{
   
   const {user} = useContext(Context)
-  //const [loading, setLoading] = useState(true)
-  
-  // useEffect(() => {
-  //     check().then(data => {
-  //         user.setUser(true)
-  //         user.setIsAuth(true)
-  //     }).finally(() => setLoading(false))
-  // }, [])
-  
+    
   useEffect(() => {
         if (localStorage.getItem('token')) {
-            user.checkAuth(user)
+            user.checkAuth(user.email, user.password)
         }
     }, [])
 
