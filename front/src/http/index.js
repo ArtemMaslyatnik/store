@@ -40,7 +40,17 @@ $authHost.interceptors.response.use((config) => {
 })
 
  
-
+$host.interceptors.response.use(
+    response => response,
+    error => {
+        if (error.response.status === 401) {
+            window.location.replace(Login_URL);
+            alert('Неверный логин или пароль');
+            return Promise.reject('Unauthorized');
+        }
+        return Promise.reject(error);
+    }
+);
 
 export {
     $host,

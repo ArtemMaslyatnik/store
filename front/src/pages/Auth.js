@@ -8,6 +8,7 @@ import {NavLink, useLocation, useNavigate } from "react-router-dom";
 import {LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE} from "../utils/consts";
 import {Context} from "../index";
 
+
 const Auth = observer(() => {
   const {user} = useContext(Context)
   const location = useLocation()

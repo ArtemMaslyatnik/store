@@ -4,10 +4,11 @@ import axios from "axios";
 import {REACT_APP_API_URL} from "../http/index";
 
 export default class UserStore {
-    user = []
+    
+    user = ''
     isAuth = false;
     isLoading = false;
-    
+
     constructor() {
         makeAutoObservable(this);
     }
@@ -24,13 +25,13 @@ export default class UserStore {
         this.isLoading = bool;
     }
 
+
     async login(email, password, ) {
         try {
-            const data = await login(email, password);
-            localStorage.setItem('token', data.access_token);
-            console.log(data)
+            const response = await login(email, password);
+            localStorage.setItem('token', response.data.access_token);
             this.setAuth(true);
-            this.setUser(data);
+            this.setUser(response.data.username);
         } catch (e) {
             console.log(e.data?.message);
         }
@@ -57,15 +58,16 @@ export default class UserStore {
         }
     }
 
-    async checkAuth(email, password) {
+    async checkAuth() {
         this.setLoading(true);
         try {
-            const data = await axios.post(`${REACT_APP_API_URL}api/auth/refresh-token/`, 
-                {email, password},
-                {withCredentials: true})
-            localStorage.setItem('token', data.accessToken);
+            const response = await axios.post(`${REACT_APP_API_URL}api/auth/refresh-token/`, 
+                {},
+                {withCredentials: true}
+            )
+            localStorage.setItem('token', response.data.access);
             this.setAuth(true);
-            this.setUser(data.user);
+            this.setUser(response.data.username);
         } catch (e) {
             console.log(e.data?.message);
         } finally {

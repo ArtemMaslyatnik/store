@@ -5,6 +5,7 @@ from rest_framework import exceptions as rest_exceptions, response
 from rest_framework_simplejwt import tokens, views as jwt_views, serializers as jwt_serializers, exceptions as jwt_exceptions
 from account import serializers
 from rest_framework.views import APIView
+from account.models import Account
 
 
 def get_user_tokens(user):
@@ -33,7 +34,7 @@ class LoginView(APIView):
                 value=tokens["access_token"],
                 expires=settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'],
                 secure=settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
-                # httponly=settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
+                httponly=settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
                 samesite=settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
             )
 
@@ -45,7 +46,7 @@ class LoginView(APIView):
                 httponly=settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
                 samesite=settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
             )
-
+            tokens['username'] = user.username
             res.data = tokens
             res["X-CSRFToken"] = csrf.get_token(request)
             return res
@@ -110,8 +111,20 @@ class CookieTokenRefreshView(jwt_views.TokenRefreshView):
                 httponly=settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
                 samesite=settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
             )
-
             del response.data["refresh"]
+        
         response["X-CSRFToken"] = request.COOKIES.get("csrftoken")
+        response.data['username'] = self.get_username(response.data['access'])
         return super().finalize_response(request, response, *args, **kwargs)
+    
+    def get_username(self, token):
+        username =''
+        try:
+            id = tokens.AccessToken(token).payload.get('user_id')
+            User = Account.objects.get(id=id)
+            username = User.username
+        except:
+            username = "unauthorized"
+        return username
+
 
