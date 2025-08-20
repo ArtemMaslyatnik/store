@@ -12,6 +12,7 @@ def get_user_tokens(user):
     refresh = tokens.RefreshToken.for_user(user)
     return {
         "refresh_token": str(refresh),
+        "username": str(user.username),
         "access_token": str(refresh.access_token)
     }
 
@@ -46,7 +47,6 @@ class LoginView(APIView):
                 httponly=settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
                 samesite=settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE']
             )
-            tokens['username'] = user.username
             res.data = tokens
             res["X-CSRFToken"] = csrf.get_token(request)
             return res
@@ -126,5 +126,3 @@ class CookieTokenRefreshView(jwt_views.TokenRefreshView):
         except:
             username = "unauthorized"
         return username
-
-

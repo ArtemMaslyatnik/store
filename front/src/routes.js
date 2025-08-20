@@ -11,7 +11,7 @@ export const authRoutes = [
         Element: <Admin/>
     },
     {
-        path: BASKET_ROUTE,
+        path: BASKET_ROUTE + '/:id',
         Element: <Basket/>
     },
 ]

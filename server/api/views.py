@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.pagination import LimitOffsetPagination
 from api.models import Basket, Brand, Device, DeviceInfo, Rating, Type, TypeBrend
-from api.permission import IsAdminOrReadOnly, IsOwner
+from api.permission import IsAdminOrReadOnly, IsOwner, get_user_by_token
 from api.serializers import BasketSerializer, BrandSerializer, DeviceInfoSerializer, DeviceSerializer, RatingSerializer, TypeBrendSerializer, TypeSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 
@@ -46,6 +46,12 @@ class BasketViewSet(viewsets.ModelViewSet):
 
     queryset = Basket.objects.all()
     serializer_class = BasketSerializer
+
+    def get_queryset(self):
+        queryset = self.queryset
+        user = get_user_by_token(self.request.COOKIES.get('access'))
+        query_set = queryset.filter(user=user)
+        return query_set
 
     permission_classes = (IsOwner, )
 

@@ -1,5 +1,6 @@
 from rest_framework import permissions
-
+from rest_framework_simplejwt import tokens
+from account.models import Account
 
 class IsAdminOrReadOnly(permissions.BasePermission):
     def has_permission(self, request, view):
@@ -27,5 +28,20 @@ class ReadOnly(permissions.BasePermission):
 
 
 class IsOwner(permissions.BasePermission):
+
     def has_object_permission(self, request, view, obj):
-        return obj.user == request.user
+ 
+        user = get_user_by_token(request.COOKIES.get('access'))
+
+        return obj.user == user
+    
+
+
+def get_user_by_token(token):
+    try:
+        id = tokens.AccessToken(token).payload.get('user_id')
+        User = Account.objects.get(id=id)
+        user = User
+    except:
+        user = 0
+    return user

@@ -4,7 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import {Context} from '../index'
-import {REGISTRATION_ROUTE, SHOP_ROUTE, LOGIN_ROUTE} from "../utils/consts";
+import {REGISTRATION_ROUTE, SHOP_ROUTE, LOGIN_ROUTE, BASKET_ROUTE} from "../utils/consts";
 import {observer} from "mobx-react-lite";
 
 const NavBar = observer(() => {
@@ -18,6 +18,7 @@ const NavBar = observer(() => {
             {user.isAuth ?
               <Nav className="me-auto">
                 <Nav.Link href={SHOP_ROUTE}>{userName}</Nav.Link> 
+                <Nav.Link href={BASKET_ROUTE+ '/1'}>Карзина</Nav.Link> 
                <Button 
                 variant="light"
                 onClick={() => user.logout()}
